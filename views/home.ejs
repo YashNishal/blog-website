@@ -6,7 +6,7 @@
     <h1><%= post.title %></h1>
     <p>
         <%= post.content.substring(0,100) + " ... " %> 
-        <a href="/posts/<%= post.title %>" target="_self">Read More</a>
+        <a href="/posts/<%= post._id %>" target="_self">Read More</a>
     </p>
     <%}); %>
     

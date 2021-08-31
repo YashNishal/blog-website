@@ -62,34 +62,32 @@ app.get("/contact", function(req, res) {
 
 // Compose
 app.get("/compose", function(req, res) {
-  res.render("compose",{
-
-  });
+  res.render("compose",{});
 });
 
 app.post('/compose', function(req ,res) {
-  if(req.body.postTitle == "" || req.body.postBody == ""){
-    res.redirect("/");
-    return;
-  }
 
   const post = new Post({
     title : req.body.postTitle,
     content : req.body.postBody
   });
 
-  post.save();
-  res.redirect("/");
+  post.save( er => {
+    if(!er) {
+      res.redirect("/");
+    }
+  });
 });
 
 
 // posts/routes
-app.get("/posts/:postName", function(req, res) {
-  let requestedTitle = req.params.postName;
+app.get("/posts/:postId", function(req, res) {
+  let requestedPostId = req.params.postId;
 
-  Post.findOne({title : requestedTitle}, function(e,result){
+  Post.findOne({_id : requestedPostId}, function(e,result){
     res.render("post",{
-      post : result
+      title : result.title,
+      content : result.content
     });
   });
 });
